@@ -1,0 +1,23 @@
+{
+  "name": "alien-registration-spa",
+  "description": "👽 alien registration SPA",
+  "repository": "https://github.com/guicheffer/alien-registration-spa",
+  "logo": "https://www.labfolder.com/favicon-32x32.png",
+  "keywords": [
+    "react",
+    "redux",
+    "reactredux",
+    "html5",
+    "css3",
+    "jest",
+    "webpack",
+    "stylus",
+    "es6",
+    "nightwatch",
+    "spa",
+    "crud",
+    "localstorage",
+    "ufo",
+    "alien"
+  ]
+}
