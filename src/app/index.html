@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<meta name="mobile-web-app-capable" content="yes">
+
+	<meta name="author" content="@guicheffer">
+	<meta name="description" content="<%= htmlWebpackPlugin.options.description %>">
+
+	<title><%= htmlWebpackPlugin.options.title %></title>
+
+	<link rel="stylesheet" href="/css/setup.css">
+	<link rel="shortcut icon" type="image/ico" href="<%= htmlWebpackPlugin.options.shortcut32x32 %>" sizes="32x32">
+
+	<script>
+    function getInitializationData () {
+      return {}
+    }
+
+	  function setupApp (options) {
+			options.before()
+
+			var app = new window.App.MainEntry({
+        initilizationData: getInitializationData()
+      })
+	  }
+	</script>
+</head>
+<body>
+  <%= require('html-loader!./header/header.html') %>
+
+	<div class="alien-registration__container">
+		<div id="app-alien-registration"> Loading... </div>
+	</div>
+
+  <%= require('html-loader!./footer/footer.html') %>
+
+	<script async src="/js/setup.js"></script>
+</body>
+</html>
