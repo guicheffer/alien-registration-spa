@@ -4,8 +4,10 @@
       "targets": {
         "browsers": ["last 2 versions", "safari 7"]
       },
-      "modules": false
+      "modules": false,
+      "loose": true
     }],
     "@babel/react"
-  ]
+  ],
+  "plugins": ["@babel/plugin-proposal-object-rest-spread"]
 }
