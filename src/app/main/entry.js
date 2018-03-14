@@ -28,12 +28,12 @@ class MainEntry extends AbstractEntry {
           <div>
             <header>
               <Link to="/">Home</Link>
-              <Link to="/about-us">About</Link>
+              <Link to="/xcv9xccbuyvbivuy">About</Link>
             </header>
 
             <main>
               <Route exact path="/" component={Home} />
-              <Route exact path="/about-us" component={About} />
+              <Route exact path="/xcv9xccbuyvbivuy/:quality" component={About} />
             </main>
           </div>
         </ConnectedRouter>
