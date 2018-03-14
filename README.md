@@ -1,2 +1,2 @@
-# ets-registration-spa
-👽 ETs registration SPA
+# alien-registration-spa
+👽 alien registration SPA
