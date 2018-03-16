@@ -8,32 +8,51 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import { Route, Link } from 'react-router-dom'
+import { Route } from 'react-router-dom'
 import { ConnectedRouter } from 'react-router-redux'
 import store, { history } from '../core/store'
 
 import AbstractEntry from '../core/entry'
 
-import Home from './home'
-import About from './about'
+import AddNew from './add-new'
+import List from './list'
+import Sidebar from './sidebar'
 
 // eslint-disable-next-line no-undef
 const browser = window
 
 class MainEntry extends AbstractEntry {
+  start ({ initilizationData }) {
+    this._giveInterviewer2NiceAndBeautifulGiantWelcomeMessages()
+
+    this.initilizationData = initilizationData
+
+    this.ui = {
+      app: browser.document.querySelector('#app-alien-registration'),
+    }
+
+    this.render()
+  }
+
   render () {
     ReactDOM.render(
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          <div>
-            <header>
+          <div className="alien-registration__wrapper">
+            {/*<header>
               <Link to="/">Home</Link>
               <Link to="/xcv9xccbuyvbivuy">About</Link>
             </header>
+            */}
 
-            <main>
-              <Route exact path="/" component={Home} />
-              <Route exact path="/xcv9xccbuyvbivuy/:quality" component={About} />
+            {/* Convert into a isolated component "<Sidebar/>" */}
+
+            <Sidebar/>
+
+            <main className="alien-registration__panel">
+              <AddNew/>
+
+              <Route exact path="/listing/" component={List} />
             </main>
           </div>
         </ConnectedRouter>
@@ -42,14 +61,17 @@ class MainEntry extends AbstractEntry {
     )
   }
 
-  start ({ initilizationData }) {
-    this.initilizationData = initilizationData
+  _giveInterviewer2NiceAndBeautifulGiantWelcomeMessages () {
+    // eslint-disable-next-line no-console
+    console.log(
+      '%c@guicheffer%c says: %c"I hope you enjoy!"',
 
-    this.ui = {
-      app: browser.document.querySelector('#app-alien-registration'),
-    }
-
-    this.render()
+      'background: #333; color: #FFF; font-size: 12px; padding: 12px;',
+      'font-size: 12px; font-style: italic;',
+      'font-weight: bold; text-transform: uppercase;',
+    )
+    // eslint-disable-next-line no-console
+    console.log('👉🏼 Please check my %cGitHub %cprofile: https://github.com/guicheffer 👀', 'font-weight: bold;', '')
   }
 }
 

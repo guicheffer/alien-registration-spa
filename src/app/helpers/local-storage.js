@@ -1,6 +1,6 @@
 /*-
- * ⭐️ Helper which helps localStorage to be stored
- *  emails or texts which has been valid before
+ * ⭐️ Helper which makes easier to store data
+ *  objects and texts on browser
  *
 -*/
 
@@ -16,12 +16,12 @@ const localStorage = {
     return browser.localStorage.setItem(item, value)
   },
 
-  getItem: (item, multiple = 'false') => {
-    if (!browser.localStorage) return multiple ? [] : ''
+  getItem: (item, isObject = false) => {
+    if (!browser.localStorage) return isObject ? [] : ''
 
     const value = browser.localStorage.getItem(item)
 
-    return multiple ? JSON.parse(value) : value
+    return isObject ? JSON.parse(value) : value
   },
 }
 

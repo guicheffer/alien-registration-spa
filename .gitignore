@@ -9,8 +9,11 @@ tests/e2e/reports/
 tests/e2e/screenshots/
 .env
 .DS_Store
+*.log
 yarn-error.log
-yarn.lock
+yarn-debug.log
+npm-debug.log*
+npm-debug.log*
 .chromedriver.log
 *.tgz
 *.zip

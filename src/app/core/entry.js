@@ -5,9 +5,9 @@
  * offers a simple way to create new bundles/entries by exposing a registry DSL that will be used
  * to start each dependency.
  *
- * React's Application is being extended used, so it becomes an obvious starting point. Every
+ * React's Application is being extended, so it becomes a starting point. Every
  * dependency and set of page components are started here through declarative registers
- * `stores`, `actions`, `dispatchers`, `stores` and `views`.
+ * such as `stores`, `actions and dispatchers` and their `views`.
  *
 -*/
 
