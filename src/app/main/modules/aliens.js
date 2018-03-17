@@ -1,7 +1,3 @@
-// export const INCREMENT_REQUESTED = 'aliens/INCREMENT_REQUESTED'
-// export const INCREMENT = 'aliens/INCREMENT'
-// export const DECREMENT_REQUESTED = 'aliens/DECREMENT_REQUESTED'
-// export const DECREMENT = 'aliens/DECREMENT'
 export const ADD_ALIEN = 'aliens/ADD_ALIEN'
 
 const initialState = [
@@ -29,32 +25,6 @@ export default (state = initialState, action) => {
         { name, species },
       ]
     }
-
-    // case INCREMENT_REQUESTED:
-    //   return {
-    //     ...state,
-    //     isIncrementing: true,
-    //   }
-    //
-    // case INCREMENT:
-    //   return {
-    //     ...state,
-    //     count: state.count + 1,
-    //     isIncrementing: !state.isIncrementing,
-    //   }
-    //
-    // case DECREMENT_REQUESTED:
-    //   return {
-    //     ...state,
-    //     isDecrementing: true,
-    //   }
-    //
-    // case DECREMENT:
-    //   return {
-    //     ...state,
-    //     count: state.count - 1,
-    //     isDecrementing: !state.isDecrementing,
-    //   }
 
     default:
       return state

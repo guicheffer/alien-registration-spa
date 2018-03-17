@@ -16,6 +16,13 @@ class AddNew extends Component {
     this.species = []
   }
 
+  _afterAdding () {
+    this.props.changePage()
+    this.input.value = ''
+  }
+
+  componentDidMount () { this.input.focus() }
+
   handleSubmit (e) {
     e.preventDefault()
     e.stopPropagation()
@@ -34,6 +41,8 @@ class AddNew extends Component {
     }
 
     this.props.addAlien({ name, species })
+    this._afterAdding()
+
     return true
   }
 
@@ -65,6 +74,7 @@ class AddNew extends Component {
                   ref={(input) => { this.species.push(input) }}
                   type="checkbox" id={`specie-index-${index}`}
                   value={specie.slugId}
+                  defaultChecked={specie.slugId === 'unknown'}
                 />
                 <label htmlFor={`specie-index-${index}`}> {specie.name} </label>
               </li>

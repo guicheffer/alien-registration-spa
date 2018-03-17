@@ -1,7 +1,7 @@
 /*-
  * ⭐️ MainEntry
  *
- * This is the main entry file for the labfolder coding challenge.
+ * This is the main entry file for alien-registration spa ❤️.
  *
 -*/
 
@@ -39,14 +39,6 @@ class MainEntry extends AbstractEntry {
       <Provider store={store}>
         <ConnectedRouter history={history}>
           <div className="alien-registration__wrapper">
-            {/*<header>
-              <Link to="/">Home</Link>
-              <Link to="/xcv9xccbuyvbivuy">About</Link>
-            </header>
-            */}
-
-            {/* Convert into a isolated component "<Sidebar/>" */}
-
             <Sidebar/>
 
             <main className="alien-registration__panel">

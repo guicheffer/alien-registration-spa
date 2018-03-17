@@ -23,6 +23,8 @@ class List extends Component {
     )
   }
 
+  shouldComponentUpdate () { return true }
+
   _createRow (alien, key) {
     return (
       <tr key={key}>

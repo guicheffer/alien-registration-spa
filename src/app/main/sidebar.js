@@ -7,7 +7,9 @@ class Sidebar extends Component {
   render () {
     return (
       <aside className="alien-registration__sidebar">
-        <h2> Total Aliens {this.props.totalAliens} </h2>
+        <h2>
+          <Link className="total" to='/listing/'> Total Aliens {this.props.totalAliens} </Link>
+        </h2>
 
         <ul className="sidebar__species">
           { this.props.species.map((specie, index) => (

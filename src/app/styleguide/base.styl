@@ -20,7 +20,6 @@
 
 @import 'layout';
 
-@import '../header/header';
 @import '../footer/footer';
 
 font-face-normal()
@@ -53,11 +52,6 @@ body, input, a {
   alien-registration-layout();
   alien-registration-layout-responsive();
 
-  &__header {
-    header();
-    header-responsive();
-  }
-
   // INVOLVE
   &__wrapper {
     display: flex;
@@ -75,8 +69,10 @@ body, input, a {
 
   &__sidebar {
     a {
-      color: green;
+      color: #47b500;
       font-weight: $font-weight-bold;
+
+      &.total { color: $white-base; }
     }
   }
 
@@ -123,8 +119,8 @@ body, input, a {
           color: $white-base;
         }
 
-        tr:nth-child(odd) {
-          background: $white-base;
+        tr:nth-child(even) {
+          background: #ffffff9c;
           color: $black-base;
           outline: 1px dotted $black-base;
         }
