@@ -6,7 +6,7 @@
   "author": "João Guilherme <hi@guicheffer.me>",
   "homepage": "https://github.com/guicheffer/alien-registration-spa",
   "config": {
-    "title": "Alien registration by @guicheffer 👀 - labfolder coding challenge",
+    "title": "Alien registration by @guicheffer 👀",
     "description": "👽 A spa of registration of Aliens made in react + redux + stylus",
     "port": "3000",
     "path": {
