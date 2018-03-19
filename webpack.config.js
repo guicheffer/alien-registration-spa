@@ -14,8 +14,9 @@ const { title, description, path: common } = defaults
 const stylintrc = JSON.parse(fs.readFileSync(path.resolve(__dirname, common.stylintrc)))
 
 module.exports = function(env = {}) {
-  let cdnPath = env.cdnPath || common.static || common.liveUrl
-  cdnPath = cdnPath.replace(/^\'|\'$/g, '')
+  let cdnPath = env.cdnPath || common.static
+  if (env.prod) cdnPath = `${common.liveUrl}/${common.static}`
+  cdnPath = env.dev ? `/${cdnPath}` : cdnPath.replace(/^\'|\'$/g, '')
 
   const loaders = {
     css: [
