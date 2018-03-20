@@ -73,8 +73,8 @@ class AddNew extends Component {
                 <input
                   ref={(input) => { this.species.push(input) }}
                   type="checkbox" id={`specie-index-${index}`}
-                  value={specie.slugId}
-                  defaultChecked={specie.slugId === 'unknown'}
+                  value={specie.slug}
+                  defaultChecked={specie.slug === 'unknown'}
                 />
                 <label htmlFor={`specie-index-${index}`}> {specie.name} </label>
               </li>

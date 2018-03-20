@@ -2,23 +2,23 @@ const initialState = {
   species: [
     {
       name: 'Anunnaki',
-      slugId: 'anunnakis',
+      slug: 'anunnakis',
     },
     {
       name: 'Grey',
-      slugId: 'greys',
+      slug: 'greys',
     },
     {
       name: 'Nordic',
-      slugId: 'nordics',
+      slug: 'nordics',
     },
     {
       name: 'Reptilian',
-      slugId: 'reptilians',
+      slug: 'reptilians',
     },
     {
       name: 'Unkown',
-      slugId: 'unknown',
+      slug: 'unknown',
     },
   ],
 }
