@@ -1,61 +1,84 @@
 import _ from 'lodash'
 import React, { Component } from 'react'
+import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+
+import { updateAlienSpecie } from './modules/aliens'
 
 class List extends Component {
   render () {
+    const { aliens, species } = this.props
+
+    if (aliens.length === 5) debugger
+
     return (
       <table className="panel__list">
         <thead>
           <tr>
-            <th> Name </th>
+            <th> <a href="#" onClick={this._handleSort.bind(this, 'hehe')}> Name </a> </th>
 
-            { this.props.species.map((specie, index) => <th key={index}> {specie.name} </th>) }
+            { species.map((specie, specieKey) => (
+                <th key={specieKey}>
+                  <a href="#" onClick={this._handleSort.bind(this)}> {specie.name} </a>
+                </th>
+              ))
+            }
 
             <th> Delete? </th>
           </tr>
         </thead>
 
         <tbody>
-          { this.props.aliens.map((alien, key) => this._createRow(alien, key)) }
+          { aliens.map((alien, alienKey) => this._createRow(alien, alienKey, species)) }
         </tbody>
       </table>
     )
   }
 
-  shouldComponentUpdate () { return true }
-
-  _createRow (alien, key) {
+  _createRow (alien, alienKey, species) {
     return (
-      <tr key={key}>
+      <tr key={alienKey}>
         <td> {alien.name} </td>
 
-        { this.props.species.map((specie, index) => (
-          <td key={index}> {_.includes(alien.species, specie.slugId) ? '✅' : ''} </td>
+        { species.map((specie, specieKey) => (
+          <td key={specieKey}>
+            <input
+              checked={_.includes(alien.species, specie.slugId)}
+              onChange={event =>
+                  this.props.updateAlienSpecie(
+                    alienKey,
+                    specie.slugId,
+                    event.target.checked,
+                  )}
+              type="checkbox"
+            />
+          </td>
         )) }
 
         <td> ❌ </td>
       </tr>
     )
   }
+
+  _handleSort (e, sortBy) {
+    e.preventDefault()
+    e.stopPropagation()
+    console.log('clicked', sortBy)
+  }
+
+  shouldComponentUpdate () { return true }
 }
 
 const mapStateToProps = state => ({
-  aliens: state.aliens,
+  aliens: state.aliens.list,
   species: state.defaults.species,
-  // isIncrementing: state.counter.isIncrementing,
-  // isDecrementing: state.counter.isDecrementing,
 })
-//
-// const mapDispatchToProps = dispatch => bindActionCreators({
-//   increment,
-//   incrementAsync,
-//   decrement,
-//   decrementAsync,
-//   changePage: () => push('/about-us'),
-// }, dispatch)
+
+const mapDispatchToProps = dispatch => bindActionCreators({
+  updateAlienSpecie,
+}, dispatch)
 
 export default connect(
   mapStateToProps,
-  () => ({}),
+  mapDispatchToProps,
 )(List)

@@ -1,29 +1,55 @@
+export const NEW_ALIEN = 'aliens/NEW_ALIEN'
 export const ADD_ALIEN = 'aliens/ADD_ALIEN'
+export const UPDATE_ALIEN_SPECIE = 'aliens/UPDATE_ALIEN_SPECIE'
 
-const initialState = [
-  {
-    name: 'E.T.',
-    species: ['anunnakis', 'greys'],
-  },
-  {
-    name: 'Chewbacca',
-    species: ['unknown'],
-  },
-  {
-    name: 'Me',
-    species: ['unknown'],
-  },
-]
+const initialState = {
+  list: [],
+}
 
 export default (state = initialState, action) => {
   switch (action.type) {
+    case NEW_ALIEN: {
+      return {
+        ...state,
+        newAlienRequested: true,
+      }
+    }
+
     case ADD_ALIEN: {
       const { name, species } = action.data.alien
+      const { list } = state
 
-      return [
+      return {
         ...state,
-        { name, species },
-      ]
+        list: [
+          ...list,
+          { name, species },
+        ],
+        newAlienRequested: false,
+      }
+    }
+
+    case UPDATE_ALIEN_SPECIE: {
+      const { alienKey, specieSlugId, value } = action
+
+      const { list: rawList } = state
+      const list = rawList.map((alien, key) => {
+        /* eslint-disable no-param-reassign */
+        if (key === alienKey) {
+          const alienSpecies = alien.species || []
+
+          if (value) alien.species = alienSpecies.concat(specieSlugId)
+          else alien.species = alienSpecies.filter(specie => (specie !== specieSlugId))
+        }
+        /* eslint-enable no-param-reassign */
+
+        return alien
+      })
+
+      return {
+        ...state,
+        list,
+      }
     }
 
     default:
@@ -33,9 +59,9 @@ export default (state = initialState, action) => {
 
 export const addAlien = (alien) => {
   const trigger = (dispatch) => {
-    // dispatch({
-    //   type: NEW_ALIEN,
-    // })
+    dispatch({
+      type: NEW_ALIEN,
+    })
 
     dispatch({
       type: ADD_ALIEN,
@@ -46,62 +72,15 @@ export const addAlien = (alien) => {
   return trigger
 }
 
-// export const increment = () => {
-//   const trigger = (dispatch) => {
-//     dispatch({
-//       type: INCREMENT_REQUESTED,
-//     })
-//
-//     dispatch({
-//       type: INCREMENT,
-//     })
-//   }
-//
-//   return trigger
-// }
-//
-// export const incrementAsync = () => {
-//   const trigger = (dispatch) => {
-//     dispatch({
-//       type: INCREMENT_REQUESTED,
-//     })
-//
-//     return setTimeout(() => {
-//       dispatch({
-//         type: INCREMENT,
-//       })
-//     }, 3000)
-//   }
-//
-//   return trigger
-// }
-//
-// export const decrement = () => {
-//   const trigger = (dispatch) => {
-//     dispatch({
-//       type: DECREMENT_REQUESTED,
-//     })
-//
-//     dispatch({
-//       type: DECREMENT,
-//     })
-//   }
-//
-//   return trigger
-// }
-//
-// export const decrementAsync = () => {
-//   const trigger = (dispatch) => {
-//     dispatch({
-//       type: DECREMENT_REQUESTED,
-//     })
-//
-//     return setTimeout(() => {
-//       dispatch({
-//         type: DECREMENT,
-//       })
-//     }, 3000)
-//   }
-//
-//   return trigger
-// }
+export const updateAlienSpecie = (alienKey, specieSlugId, value) => {
+  const trigger = (dispatch) => {
+    dispatch({
+      type: UPDATE_ALIEN_SPECIE,
+      alienKey,
+      specieSlugId,
+      value,
+    })
+  }
+
+  return trigger
+}

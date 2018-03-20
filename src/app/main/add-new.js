@@ -59,7 +59,7 @@ class AddNew extends Component {
             id="name"
             maxLength={DEFAULT_MAX_LENGTH}
             name="name"
-            pattern={`[A-Za-z0-9]{3,${DEFAULT_MAX_LENGTH}}`}
+            pattern={`[A-Za-z0-9 ]{3,${DEFAULT_MAX_LENGTH}}`}
             placeholder="Name"
             ref={(input) => { this.input = input }}
             required="required"

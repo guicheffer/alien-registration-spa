@@ -25,7 +25,7 @@ class Sidebar extends Component {
 
 const mapStateToProps = state => ({
   species: state.defaults.species.reduce((species, specie) => {
-    const aliens = state.aliens.filter(alien => _.includes(alien.species, specie.slugId))
+    const aliens = state.aliens.list.filter(alien => _.includes(alien.species, specie.slugId))
 
     if (aliens.length) {
       species.push({
@@ -36,7 +36,7 @@ const mapStateToProps = state => ({
 
     return species
   }, []),
-  totalAliens: state.aliens.length,
+  totalAliens: state.aliens.list.length,
 })
 //
 // const mapDispatchToProps = dispatch => bindActionCreators({
