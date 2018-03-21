@@ -1,12 +1,13 @@
 import _ from 'lodash'
 
-export const NEW_ALIEN = 'aliens/NEW_ALIEN'
+import generateUniqId from '../utils/generate-uniq-id'
+
 export const ADD_ALIEN = 'aliens/ADD_ALIEN'
 export const UPDATE_ALIEN_SPECIE = 'aliens/UPDATE_ALIEN_SPECIE'
 export const SORT_BY = 'aliens/SORT_BY'
 
 const initialState = {
-  list: [],
+  list: [{ id: '1', name: 'hehe', species: ['nordics'] }],
   sorted: {
     value: 'name',
     by: 'asc',
@@ -16,34 +17,34 @@ const initialState = {
 // eslint-disable-next-line complexity
 export default (state = initialState, action) => {
   switch (action.type) {
-    case NEW_ALIEN: {
-      return {
-        ...state,
-      }
-    }
-
     case ADD_ALIEN: {
       const { name, species } = action.data.alien
       const { list: rawList, sorted } = state
+
       const listSortedByName = _.sortBy([
         ...rawList,
-        { name, species },
+        {
+          id: generateUniqId(),
+          name,
+          species,
+        },
       ], 'name')
       const list = sorted.by === 'desc' ? listSortedByName.reverse() : listSortedByName
 
       return {
         ...state,
         list,
+        sorted: {},
       }
     }
 
     case UPDATE_ALIEN_SPECIE: {
-      const { alienKey, specieslug, value } = action
+      const { id, specieslug, value } = action
 
       const { list: rawList } = state
-      const list = rawList.map((alien, key) => {
+      const list = rawList.map((alien) => {
         /* eslint-disable no-param-reassign */
-        if (key === alienKey) {
+        if (id === alien.id) {
           const alienSpecies = alien.species || []
 
           if (value) alien.species = alienSpecies.concat(specieslug)
@@ -108,10 +109,6 @@ export default (state = initialState, action) => {
 export const addAlien = (alien) => {
   const trigger = (dispatch) => {
     dispatch({
-      type: NEW_ALIEN,
-    })
-
-    dispatch({
       type: ADD_ALIEN,
       data: { alien },
     })
@@ -120,11 +117,11 @@ export const addAlien = (alien) => {
   return trigger
 }
 
-export const updateAlienSpecie = (alienKey, specieslug, value) => {
+export const updateAlienSpecie = (id, specieslug, value) => {
   const trigger = (dispatch) => {
     dispatch({
       type: UPDATE_ALIEN_SPECIE,
-      alienKey,
+      id,
       specieslug,
       value,
     })

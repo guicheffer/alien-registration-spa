@@ -6,3 +6,5 @@
 - Remove `localStorage` logical patterns and add an simple API to consume data and to be fetched as requested by user's actions.
 
 - Modules its where actions and dispatchers are located
+
+- IMO a good code doesn't need comments spread out.

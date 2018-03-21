@@ -8,15 +8,14 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
-import { Route } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import { ConnectedRouter } from 'react-router-redux'
 import store, { history } from '../core/store'
 
 import AbstractEntry from '../core/entry'
 
-import AddNew from './add-new'
+import Homepage from './homepage'
 import List from './list'
-import Sidebar from './sidebar'
 
 // eslint-disable-next-line no-undef
 const browser = window
@@ -38,15 +37,18 @@ class MainEntry extends AbstractEntry {
     ReactDOM.render(
       <Provider store={store}>
         <ConnectedRouter history={history}>
-          <div className="alien-registration__wrapper">
-            <Sidebar/>
+          <main className="alien-registration__panel">
+            <Switch>
+              <Route exact path="/" component={Homepage} />
 
-            <main className="alien-registration__panel">
-              <AddNew/>
+              <Route exact path="/aliens/" component={List} />
+              <Route exact path="/aliens/specie/:specie" component={List} />
 
-              <Route exact path="/listing/" component={List} />
-            </main>
-          </div>
+              <Route component={() => (
+                <section className="panel__error" data-error="404"> 4️⃣0️⃣4️⃣ 👉🏼 not found </section>
+              )} />
+            </Switch>
+          </main>
         </ConnectedRouter>
       </Provider>,
       this.ui.app,

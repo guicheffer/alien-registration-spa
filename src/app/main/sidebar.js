@@ -1,20 +1,21 @@
-import _ from 'lodash'
 import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { connect } from 'react-redux'
+
+import getSpeciesByAlien from './utils/get-species-by-alien'
 
 class Sidebar extends Component {
   render () {
     return (
       <aside className="alien-registration__sidebar">
         <h2>
-          <Link className="total" to='/listing/'> Total Aliens {this.props.totalAliens} </Link>
+          <Link className="total" to='/aliens/'> Total Aliens {this.props.totalAliens} </Link>
         </h2>
 
         <ul className="sidebar__species">
-          { this.props.species.map((specie, index) => (
+          { this.props.filteredSpecies.map((specie, index) => (
             <li key={index}>
-              <Link to={`/listing/${specie.slug}/`}> {specie.name}: {specie.total} </Link>
+              <Link to={`/aliens/specie/${specie.slug}/`}> {specie.name}: {specie.total} </Link>
             </li>
           )) }
         </ul>
@@ -24,18 +25,7 @@ class Sidebar extends Component {
 }
 
 const mapStateToProps = state => ({
-  species: state.defaults.species.reduce((species, specie) => {
-    const aliens = state.aliens.list.filter(alien => _.includes(alien.species, specie.slug))
-
-    if (aliens.length) {
-      species.push({
-        total: aliens.length,
-        ...specie,
-      })
-    }
-
-    return species
-  }, []),
+  filteredSpecies: getSpeciesByAlien(state.defaults.species, state.aliens.list),
   totalAliens: state.aliens.list.length,
 })
 

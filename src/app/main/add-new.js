@@ -16,36 +16,6 @@ class AddNew extends Component {
     this.species = []
   }
 
-  _afterAdding () {
-    this.props.changePage()
-    this.input.value = ''
-  }
-
-  componentDidMount () { this.input.focus() }
-
-  handleSubmit (e) {
-    e.preventDefault()
-    e.stopPropagation()
-
-    const name = this.input.value
-    const species = this.species.reduce((speciesValues, specie) => {
-      if (specie.checked) speciesValues.push(specie.value)
-
-      return speciesValues
-    }, [])
-
-    if (!species.length) {
-      // eslint-disable-next-line no-undef, no-alert
-      alert('⚠️ Please, select at least one type of a specie!')
-      return false
-    }
-
-    this.props.addAlien({ name, species })
-    this._afterAdding()
-
-    return true
-  }
-
   render () {
     return (
       <section className="panel__add-new">
@@ -86,6 +56,36 @@ class AddNew extends Component {
       </section>
     )
   }
+
+  _afterAdding () {
+    this.props.changePage()
+    this.input.value = ''
+  }
+
+  handleSubmit (e) {
+    e.preventDefault()
+    e.stopPropagation()
+
+    const name = this.input.value
+    const species = this.species.reduce((speciesValues, specie) => {
+      if (specie.checked) speciesValues.push(specie.value)
+
+      return speciesValues
+    }, [])
+
+    if (!species.length) {
+      // eslint-disable-next-line no-undef, no-alert
+      alert('⚠️ Please, select at least one type of a specie!')
+      return false
+    }
+
+    this.props.addAlien({ name, species })
+    this._afterAdding()
+
+    return true
+  }
+
+  componentDidMount () { this.input.focus() }
 }
 
 const mapStateToProps = state => ({ species: state.defaults.species })
@@ -93,9 +93,9 @@ const mapStateToProps = state => ({ species: state.defaults.species })
 const mapDispatchToProps = dispatch => bindActionCreators({
   addAlien,
   changePage: () => {
-    if (browser.location.pathname === '/listing/') return { type: null }
+    if (browser.location.pathname.indexOf('/aliens/') !== -1) return { type: null }
 
-    return push('/listing/')
+    return push('/aliens/')
   },
 }, dispatch)
 

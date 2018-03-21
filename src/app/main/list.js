@@ -1,7 +1,13 @@
 import _ from 'lodash'
 import React, { Component } from 'react'
+import { Link } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+
+import AddNew from './add-new'
+import Sidebar from './sidebar'
+
+import getSpeciesByAlien from './utils/get-species-by-alien'
 
 import {
   sortBy,
@@ -9,22 +15,32 @@ import {
 } from './modules/aliens'
 
 class List extends Component {
+  constructor (props) {
+    super(props)
+    this.state = { aliens: [] }
+  }
+
   render () {
-    const { aliens, species } = this.props
+    const { filteredSpecies, species } = this.props
+    const { aliens } = this.state
 
     return (
-      <table className="panel__list">
-        <thead>
-          <tr>
-            <th>
-              <a
-                href="#"
-                data-sort-by="name"
-                onClick={this._handleSort.bind(this)}
-              > {aliens.length ? this._sortedBy('name') : ''} Name </a>
-            </th>
+      <div className="panel__list">
+        <Sidebar/>
 
-            { species.map((specie, specieKey) => (
+        <AddNew/>
+
+        <table>
+          <thead>
+            <tr>
+              <th>
+                <a
+                  href="#"
+                  data-sort-by="name"
+                  onClick={this._handleSort.bind(this)}
+                > {aliens.length ? this._sortedBy('name') : ''} Name </a>
+              </th>
+              { species.map((specie, specieKey) => (
                 <th key={specieKey}>
                   <a
                     href="#"
@@ -32,30 +48,37 @@ class List extends Component {
                     onClick={this._handleSort.bind(this)}
                   > {this._sortedBy(specie.slug)} {specie.name} </a>
                 </th>
-              ))
+              ))}
+              <th> Delete? </th>
+            </tr>
+          </thead>
+
+          <tbody>
+            { aliens.length ?
+                aliens.map(alien => this._createRow(alien, alien.id, species))
+              : (
+                <tr>
+                  <td colSpan={species.length + 2}> Empty results </td>
+                </tr>
+              )
             }
+          </tbody>
+        </table>
 
-            <th> Delete? </th>
-          </tr>
-        </thead>
-
-        <tbody>
-          { aliens.length ?
-              aliens.map((alien, alienKey) => this._createRow(alien, alienKey, species))
-            : (
-              <tr>
-                <td colSpan={species.length + 2}> Empty results </td>
-              </tr>
-            )
-          }
-        </tbody>
-      </table>
+        <ul className="list__links">
+          { filteredSpecies.map((specie, index) => (
+            <li key={index}>
+              <Link to={`/aliens/specie/${specie.slug}/`}> {specie.name} </Link>
+            </li>
+          )) }
+        </ul>
+      </div>
     )
   }
 
-  _createRow (alien, alienKey, species) {
+  _createRow (alien, id, species) {
     return (
-      <tr key={alienKey}>
+      <tr key={id}>
         <td> {alien.name} </td>
 
         { species.map((specie, specieKey) => (
@@ -64,7 +87,7 @@ class List extends Component {
               checked={_.includes(alien.species, specie.slug)}
               onChange={event =>
                   this.props.updateAlienSpecie(
-                    alienKey,
+                    id,
                     specie.slug,
                     event.target.checked,
                   )}
@@ -95,11 +118,28 @@ class List extends Component {
     return null
   }
 
-  shouldComponentUpdate () { return true }
+  _filterBySpecie (aliens, specie) {
+    return aliens.filter(alien => (alien.species.indexOf(specie) !== -1))
+  }
+
+  componentWillMount () {
+    const { specie = null } = this.props.match.params
+    const aliens = specie ? this._filterBySpecie(this.props.aliens, specie) : this.props.aliens
+
+    this.setState({ aliens })
+  }
+
+  componentWillReceiveProps (nextProps) {
+    const { specie = null } = nextProps.match.params
+    const aliens = specie ? this._filterBySpecie(nextProps.aliens, specie) : nextProps.aliens
+
+    this.setState({ aliens })
+  }
 }
 
 const mapStateToProps = state => ({
   aliens: state.aliens.list,
+  filteredSpecies: getSpeciesByAlien(state.defaults.species, state.aliens.list),
   sorted: state.aliens.sorted,
   species: state.defaults.species,
 })
