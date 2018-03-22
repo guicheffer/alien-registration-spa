@@ -20,6 +20,8 @@
 
 @import 'layout';
 
+@import '../main/panel';
+@import '../main/sidebar';
 @import '../footer/footer';
 
 font-face-normal()
@@ -51,6 +53,16 @@ body, input, a {
 .alien-registration {
   alien-registration-layout();
   alien-registration-layout-responsive();
+
+  &__panel {
+    panel();
+    panel-responsive();
+  }
+
+  &__sidebar {
+    sidebar();
+    sidebar-responsive();
+  }
 
   &__footer {
     footer();
