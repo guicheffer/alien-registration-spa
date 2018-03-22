@@ -16,7 +16,7 @@ const localStorage = {
     return browser.localStorage.setItem(item, value)
   },
 
-  getItem: (item, isObject = false) => {
+  getItem: (item, isObject = true) => {
     if (!browser.localStorage) return isObject ? [] : ''
 
     const value = browser.localStorage.getItem(item)

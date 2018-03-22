@@ -1,12 +1,14 @@
 import _ from 'lodash'
 
+import localStorage from '../../helpers/local-storage'
 import generateUniqId from '../utils/generate-uniq-id'
 
+const DEFAULT_ITEM_NAME = 'aliens'
+
 const initialState = {
-  list: [
-    { id: '1', name: 'hehe', species: ['nordics'] },
-    { id: '2', name: 'hehe2', species: ['greys'] },
-  ],
+  //  localStorage while we have no backend configured
+  // (README.md) should contain more details
+  list: localStorage.getItem(DEFAULT_ITEM_NAME) || [],
   sorted: {
     value: 'name',
     by: 'asc',
@@ -17,6 +19,7 @@ export const ADD = 'aliens/ADD'
 export const REMOVE = 'aliens/REMOVE'
 export const UPDATE_SPECIE = 'aliens/UPDATE_SPECIE'
 export const SORT_BY = 'aliens/SORT_BY'
+export const SAVE = 'aliens/SAVE'
 
 export const JUST_INTERACTED = 'defaults/JUST_INTERACTED'
 
@@ -49,7 +52,11 @@ export default (state = initialState, action) => {
       const { list: rawList } = state
       const list = rawList.filter(alien => alien.id !== id)
 
-      return { ...state, list }
+      return {
+        ...state,
+        list,
+        sorted: {},
+      }
     }
 
     case SORT_BY: {
@@ -115,6 +122,15 @@ export default (state = initialState, action) => {
       }
     }
 
+    case SAVE: {
+      const { list: rawList } = state
+      const list = _.sortBy(rawList, 'name')
+
+      localStorage.setItem(DEFAULT_ITEM_NAME, list)
+
+      return { ...state }
+    }
+
     default:
       return state
   }
@@ -128,6 +144,8 @@ export const add = (alien) => {
       type: ADD,
       data: { alien },
     })
+
+    dispatch({ type: SAVE })
   }
 
   return trigger
@@ -141,6 +159,8 @@ export const remove = (id) => {
       type: REMOVE,
       id,
     })
+
+    dispatch({ type: SAVE })
   }
 
   return trigger
@@ -167,6 +187,8 @@ export const updateSpecie = (id, specieslug, value) => {
       specieslug,
       value,
     })
+
+    dispatch({ type: SAVE })
   }
 
   return trigger

@@ -148,14 +148,14 @@ class List extends Component {
 
     const onPageClick = (e) => {
       browser.document.body.removeEventListener('click', onPageClick)
-
       const nextStep = e.target.getAttribute('data-next-step')
 
+      if (nextStep) e.preventDefault()
       if (nextStep === 'proceed') return this.props.remove(id)
 
       this.props.requestDeletion(false)
 
-      return e.preventDefault()
+      return null
     }
 
     browser.document.body.addEventListener('click', onPageClick)
