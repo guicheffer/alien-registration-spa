@@ -18,7 +18,7 @@ class AddNew extends Component {
 
   render () {
     return (
-      <section className="panel__add-new">
+      <section className="panel__content panel__content--add-new">
         <form onSubmit={ this.handleSubmit.bind(this) }>
           <label htmlFor="name" className="add-new__label"> Add new alien </label>
           <input

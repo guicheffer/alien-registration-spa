@@ -3,10 +3,12 @@ import React, { Component } from 'react'
 import { Link } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import { Helmet } from 'react-helmet'
 
 import AddNew from './add-new'
 import Sidebar from './sidebar'
 
+import { getTitle } from '../helpers/get-initialization-data'
 import getSpeciesByAlien from './utils/get-species-by-alien'
 
 import { remove, sortBy, updateSpecie } from './modules/aliens'
@@ -31,7 +33,13 @@ class List extends Component {
     } = this.props
 
     return (
-      <div className="panel__list">
+      <div className="panel__content panel__content--list">
+        <Helmet>
+          <title>
+            { getTitle((params.specie ? params.specie : 'Aliens')) }
+          </title>
+        </Helmet>
+
         <Sidebar/>
 
         <AddNew/>

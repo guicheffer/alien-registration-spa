@@ -16,7 +16,9 @@
 
 	<script>
     function getInitializationData () {
-      return {}
+      return {
+        metaTitle: '<%= htmlWebpackPlugin.options.title %>'
+      }
     }
 
 	  function setupApp (options) {
