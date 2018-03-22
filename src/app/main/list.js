@@ -14,6 +14,8 @@ import {
   updateAlienSpecie,
 } from './modules/aliens'
 
+import { updateList } from './modules/defaults'
+
 class List extends Component {
   constructor (props) {
     super(props)
@@ -21,8 +23,12 @@ class List extends Component {
   }
 
   render () {
-    const { filteredSpecies, species } = this.props
     const { aliens } = this.state
+    const {
+      filteredSpecies,
+      interacted,
+      species,
+    } = this.props
 
     return (
       <div className="panel__list">
@@ -64,6 +70,12 @@ class List extends Component {
             }
           </tbody>
         </table>
+
+        {
+          this.props.match.params.specie && interacted ?
+            <Link to='/aliens/' onClick={this.props.updateList}> interacted </Link>
+          : ''
+        }
 
         <ul className="list__links">
           { filteredSpecies.map((specie, index) => (
@@ -140,6 +152,7 @@ class List extends Component {
 const mapStateToProps = state => ({
   aliens: state.aliens.list,
   filteredSpecies: getSpeciesByAlien(state.defaults.species, state.aliens.list),
+  interacted: state.defaults.interacted,
   sorted: state.aliens.sorted,
   species: state.defaults.species,
 })
@@ -147,6 +160,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => bindActionCreators({
   sortBy,
   updateAlienSpecie,
+  updateList,
 }, dispatch)
 
 export default connect(

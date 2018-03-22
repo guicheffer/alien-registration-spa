@@ -6,6 +6,8 @@ export const ADD_ALIEN = 'aliens/ADD_ALIEN'
 export const UPDATE_ALIEN_SPECIE = 'aliens/UPDATE_ALIEN_SPECIE'
 export const SORT_BY = 'aliens/SORT_BY'
 
+export const JUST_INTERACTED = 'defaults/JUST_INTERACTED'
+
 const initialState = {
   list: [{ id: '1', name: 'hehe', species: ['nordics'] }],
   sorted: {
@@ -108,6 +110,8 @@ export default (state = initialState, action) => {
 
 export const addAlien = (alien) => {
   const trigger = (dispatch) => {
+    dispatch({ type: JUST_INTERACTED })
+
     dispatch({
       type: ADD_ALIEN,
       data: { alien },
@@ -119,6 +123,8 @@ export const addAlien = (alien) => {
 
 export const updateAlienSpecie = (id, specieslug, value) => {
   const trigger = (dispatch) => {
+    dispatch({ type: JUST_INTERACTED })
+
     dispatch({
       type: UPDATE_ALIEN_SPECIE,
       id,
