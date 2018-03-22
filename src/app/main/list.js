@@ -9,12 +9,11 @@ import Sidebar from './sidebar'
 
 import getSpeciesByAlien from './utils/get-species-by-alien'
 
-import {
-  sortBy,
-  updateAlienSpecie,
-} from './modules/aliens'
+import { remove, sortBy, updateSpecie } from './modules/aliens'
+import { requestDeletion, updateList } from './modules/defaults'
 
-import { updateList } from './modules/defaults'
+// eslint-disable-next-line no-undef
+const browser = window
 
 class List extends Component {
   constructor (props) {
@@ -23,6 +22,7 @@ class List extends Component {
   }
 
   render () {
+    const { params } = this.props.match
     const { aliens } = this.state
     const {
       filteredSpecies,
@@ -72,7 +72,7 @@ class List extends Component {
         </table>
 
         {
-          this.props.match.params.specie && interacted ?
+          params.specie && interacted ?
             <Link to='/aliens/' onClick={this.props.updateList}> interacted </Link>
           : ''
         }
@@ -89,6 +89,8 @@ class List extends Component {
   }
 
   _createRow (alien, id, species) {
+    const { isDeleting } = this.props
+
     return (
       <tr key={id}>
         <td> {alien.name} </td>
@@ -98,7 +100,7 @@ class List extends Component {
             <input
               checked={_.includes(alien.species, specie.slug)}
               onChange={event =>
-                  this.props.updateAlienSpecie(
+                  this.props.updateSpecie(
                     id,
                     specie.slug,
                     event.target.checked,
@@ -108,7 +110,15 @@ class List extends Component {
           </td>
         )) }
 
-        <td> ❌ </td>
+        <td>
+          { isDeleting === id ?
+              <p>
+                <a data-next-step="proceed" href="#" title="Delete it!"> 👍🏼 </a> |
+                <a data-next-step="cancel" href="#" title="No. Please. No"> 👎🏼 </a>
+              </p>
+            : <a href="#" onClick={event => this._requestDeletion(event, id)}> ❌ </a>
+          }
+        </td>
       </tr>
     )
   }
@@ -123,7 +133,6 @@ class List extends Component {
   _sortedBy (isSortedBy) {
     const { sorted } = this.props
     if (!sorted) return null
-
     const mapSortedBy = { asc: '🔼', desc: '🔽' }
 
     if (isSortedBy === sorted.value) return mapSortedBy[sorted.by]
@@ -132,6 +141,25 @@ class List extends Component {
 
   _filterBySpecie (aliens, specie) {
     return aliens.filter(alien => (alien.species.indexOf(specie) !== -1))
+  }
+
+  _requestDeletion (event, id) {
+    this.props.requestDeletion(id)
+
+    const onPageClick = (e) => {
+      browser.document.body.removeEventListener('click', onPageClick)
+
+      const nextStep = e.target.getAttribute('data-next-step')
+
+      if (nextStep === 'proceed') return this.props.remove(id)
+
+      this.props.requestDeletion(false)
+
+      return e.preventDefault()
+    }
+
+    browser.document.body.addEventListener('click', onPageClick)
+    event.preventDefault()
   }
 
   componentWillMount () {
@@ -153,13 +181,16 @@ const mapStateToProps = state => ({
   aliens: state.aliens.list,
   filteredSpecies: getSpeciesByAlien(state.defaults.species, state.aliens.list),
   interacted: state.defaults.interacted,
+  isDeleting: state.defaults.isDeleting,
   sorted: state.aliens.sorted,
   species: state.defaults.species,
 })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
+  remove,
+  requestDeletion,
   sortBy,
-  updateAlienSpecie,
+  updateSpecie,
   updateList,
 }, dispatch)
 

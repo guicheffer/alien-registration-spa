@@ -3,7 +3,7 @@ import { push } from 'react-router-redux'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 
-import { addAlien } from './modules/aliens'
+import { add } from './modules/aliens'
 
 // eslint-disable-next-line no-undef
 const browser = window
@@ -79,7 +79,7 @@ class AddNew extends Component {
       return false
     }
 
-    this.props.addAlien({ name, species })
+    this.props.add({ name, species })
     this._afterAdding()
 
     return true
@@ -91,7 +91,7 @@ class AddNew extends Component {
 const mapStateToProps = state => ({ species: state.defaults.species })
 
 const mapDispatchToProps = dispatch => bindActionCreators({
-  addAlien,
+  add,
   changePage: () => {
     if (browser.location.pathname.indexOf('/aliens/') !== -1) return { type: null }
 

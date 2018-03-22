@@ -2,24 +2,28 @@ import _ from 'lodash'
 
 import generateUniqId from '../utils/generate-uniq-id'
 
-export const ADD_ALIEN = 'aliens/ADD_ALIEN'
-export const UPDATE_ALIEN_SPECIE = 'aliens/UPDATE_ALIEN_SPECIE'
-export const SORT_BY = 'aliens/SORT_BY'
-
-export const JUST_INTERACTED = 'defaults/JUST_INTERACTED'
-
 const initialState = {
-  list: [{ id: '1', name: 'hehe', species: ['nordics'] }],
+  list: [
+    { id: '1', name: 'hehe', species: ['nordics'] },
+    { id: '2', name: 'hehe2', species: ['greys'] },
+  ],
   sorted: {
     value: 'name',
     by: 'asc',
   },
 }
 
+export const ADD = 'aliens/ADD'
+export const REMOVE = 'aliens/REMOVE'
+export const UPDATE_SPECIE = 'aliens/UPDATE_SPECIE'
+export const SORT_BY = 'aliens/SORT_BY'
+
+export const JUST_INTERACTED = 'defaults/JUST_INTERACTED'
+
 // eslint-disable-next-line complexity
 export default (state = initialState, action) => {
   switch (action.type) {
-    case ADD_ALIEN: {
+    case ADD: {
       const { name, species } = action.data.alien
       const { list: rawList, sorted } = state
 
@@ -40,28 +44,12 @@ export default (state = initialState, action) => {
       }
     }
 
-    case UPDATE_ALIEN_SPECIE: {
-      const { id, specieslug, value } = action
-
+    case REMOVE: {
+      const { id } = action
       const { list: rawList } = state
-      const list = rawList.map((alien) => {
-        /* eslint-disable no-param-reassign */
-        if (id === alien.id) {
-          const alienSpecies = alien.species || []
+      const list = rawList.filter(alien => alien.id !== id)
 
-          if (value) alien.species = alienSpecies.concat(specieslug)
-          else alien.species = alienSpecies.filter(specie => (specie !== specieslug))
-        }
-        /* eslint-enable no-param-reassign */
-
-        return alien
-      })
-
-      return {
-        ...state,
-        list,
-        sorted: {},
-      }
+      return { ...state, list }
     }
 
     case SORT_BY: {
@@ -103,17 +91,41 @@ export default (state = initialState, action) => {
       }
     }
 
+    case UPDATE_SPECIE: {
+      const { id, specieslug, value } = action
+
+      const { list: rawList } = state
+      const list = rawList.map((alien) => {
+        /* eslint-disable no-param-reassign */
+        if (id === alien.id) {
+          const alienSpecies = alien.species || []
+
+          if (value) alien.species = alienSpecies.concat(specieslug)
+          else alien.species = alienSpecies.filter(specie => (specie !== specieslug))
+        }
+        /* eslint-enable no-param-reassign */
+
+        return alien
+      })
+
+      return {
+        ...state,
+        list,
+        sorted: {},
+      }
+    }
+
     default:
       return state
   }
 }
 
-export const addAlien = (alien) => {
+export const add = (alien) => {
   const trigger = (dispatch) => {
     dispatch({ type: JUST_INTERACTED })
 
     dispatch({
-      type: ADD_ALIEN,
+      type: ADD,
       data: { alien },
     })
   }
@@ -121,15 +133,13 @@ export const addAlien = (alien) => {
   return trigger
 }
 
-export const updateAlienSpecie = (id, specieslug, value) => {
+export const remove = (id) => {
   const trigger = (dispatch) => {
     dispatch({ type: JUST_INTERACTED })
 
     dispatch({
-      type: UPDATE_ALIEN_SPECIE,
+      type: REMOVE,
       id,
-      specieslug,
-      value,
     })
   }
 
@@ -140,6 +150,21 @@ export const sortBy = (value) => {
   const trigger = (dispatch) => {
     dispatch({
       type: SORT_BY,
+      value,
+    })
+  }
+
+  return trigger
+}
+
+export const updateSpecie = (id, specieslug, value) => {
+  const trigger = (dispatch) => {
+    dispatch({ type: JUST_INTERACTED })
+
+    dispatch({
+      type: UPDATE_SPECIE,
+      id,
+      specieslug,
       value,
     })
   }
