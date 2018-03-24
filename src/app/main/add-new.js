@@ -18,40 +18,47 @@ class AddNew extends Component {
 
   render () {
     return (
-      <section className="panel__content panel__content--add-new">
+      <section className="panel__add-new">
         <form onSubmit={ this.handleSubmit.bind(this) }>
           <label htmlFor="name" className="add-new__label"> Add new alien </label>
-          <input
-            autoCapitalize="off"
-            autoComplete="off"
-            autoCorrect="off"
-            className="add-new__input"
-            id="name"
-            maxLength={DEFAULT_MAX_LENGTH}
-            name="name"
-            pattern={`[A-Za-z0-9 ]{3,${DEFAULT_MAX_LENGTH}}`}
-            placeholder="Name"
-            ref={(input) => { this.input = input }}
-            required="required"
-            spellCheck="false"
-            type="text"
-          />
 
-          <ul className="add-new__species">
-            { this.props.species.map((specie, index) => (
-              <li key={index}>
-                <input
-                  ref={(input) => { this.species.push(input) }}
-                  type="checkbox" id={`specie-index-${index}`}
-                  value={specie.slug}
-                  defaultChecked={specie.slug === 'unknown'}
-                />
-                <label htmlFor={`specie-index-${index}`}> {specie.name} </label>
-              </li>
-            )) }
-          </ul>
+          <div className="add-new__field">
+            <input
+              autoCapitalize="off"
+              autoComplete="off"
+              autoCorrect="off"
+              autoFocus
+              className="add-new__input"
+              id="name"
+              maxLength={DEFAULT_MAX_LENGTH}
+              name="name"
+              pattern={`[A-Za-z0-9 ]{3,${DEFAULT_MAX_LENGTH}}`}
+              placeholder="Name"
+              ref={(input) => { this.input = input }}
+              required="required"
+              spellCheck="false"
+              type="text"
+            />
 
-          <button type="submit"> Add </button>
+            <ul className="add-new__species">
+              { this.props.species.map((specie, index) => (
+                <li className="add-new__specie" key={index}>
+                  <input
+                    ref={(input) => { this.species.push(input) }}
+                    type="checkbox" id={`specie-index-${index}`}
+                    value={specie.slug}
+                    defaultChecked={specie.slug === 'unknown'}
+                  />
+                  <label htmlFor={`specie-index-${index}`}> {specie.name} </label>
+                </li>
+              )) }
+            </ul>
+
+            <button
+              className="add-new__go"
+              type="submit"
+            > Add Alien </button>
+          </div>
         </form>
       </section>
     )
@@ -84,8 +91,6 @@ class AddNew extends Component {
 
     return true
   }
-
-  componentDidMount () { this.input.focus() }
 }
 
 const mapStateToProps = state => ({ species: state.defaults.species })

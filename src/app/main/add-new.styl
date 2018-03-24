@@ -1,0 +1,85 @@
+/*- ⭐️ Add new component style
+ *
+-*/
+
+@import 'container';
+@import 'spacing';
+
+add-new() {
+  .add-new {
+    &__label {
+      display: block;
+      font-weight: $font-weight-bold;
+
+      &::before { content: '👇🏼'; }
+    }
+
+    &__field {
+      align-items: center;
+      display: flex;
+      margin: $spacing-xsmall 0 0;
+    }
+
+    &__input {
+      background: $white-sdfoi;
+      border-radius: $spacing-xxsmall;
+      color: $white-base;
+      padding: $spacing-xxsmall $spacing-xsmall;
+    }
+
+    &__species {
+      display: flex;
+      flex: 1;
+      justify-content: space-around;
+    }
+
+    &__specie {
+      label {
+        cursor: pointer;
+        opacity: 0.4;
+        transition: opacity .2s ease-in-out;
+        will-change: opacity;
+
+        &:hover { opacity: 0.6; }
+      }
+
+      [type=checkbox] {
+        display: none;
+
+        &:checked + label { opacity: 1; }
+      }
+    }
+
+    &__go {
+      background: $white-base;
+      border-radius: $spacing-small;
+      border: 0;
+      font-size: $font-size-small;
+      margin: 0 $spacing-small 0;
+      outline: 0;
+      padding: $spacing-xxsmall $spacing-base;
+      text-transform: uppercase;
+      transition: background .2s linear, color .2s linear;
+      will-change: background, color;
+
+      &:not([disabled]) {
+        cursor: pointer;
+
+        &:hover {
+          background: $black-base;
+          color: $white-base;
+        }
+      }
+
+      &[disabled] { background: $gray-disabled; }
+    }
+  }
+}
+
+add-new-responsive() {
+  +mq-medium-up() {
+    .add-new {
+
+    }
+  }
+}

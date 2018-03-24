@@ -7,9 +7,9 @@ import Sidebar from './sidebar'
 import { getTitle } from '../helpers/get-initialization-data'
 
 export default () => (
-  <div className="panel__content panel__content--homepage">
+  <div className="panel__content panel__homepage">
     <Helmet>
-        <title> {getTitle('👽')} </title>
+        <title> {getTitle('Home')} </title>
     </Helmet>
 
     <Sidebar/>

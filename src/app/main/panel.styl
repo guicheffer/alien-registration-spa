@@ -7,18 +7,41 @@
 @import 'container';
 @import 'spacing';
 
+@import '../main/add-new'
+@import '../main/list'
+
 panel() {
   display: flex;
   height: 'calc(90vh - %s)' % $spacing-xxlarge;
   justify-content: space-around;
-  width: 90vw;
+  width: 100%;
 
   .panel {
     &__content {
+      background: $gray-xcviu;
+      border-radius: $spacing-base;
+      box-shadow: $spacing-xxsmall $spacing-xxsmall $spacing-xxxlarge $spacing-base $gray-cvoiw;
       display: flex;
       flex-direction: column-reverse;
       flex-wrap: wrap;
       justify-content: flex-start;
+    }
+
+    &__homepage {
+      .panel__add-new {
+        flex: 1;
+        margin-left: $spacing-large;
+      }
+    }
+
+    &__add-new {
+      add-new();
+      add-new-responsive();
+    }
+
+    &__list {
+      list();
+      list-responsive();
     }
   }
 }
@@ -30,10 +53,13 @@ panel-responsive() {
 
     .panel {
       &__content {
+        $min-width = 930px;
+
         box-sizing: content-box;
         flex-direction: row;
         justify-content: space-between;
-        padding: $spacing-small;
+        min-width: $min-width;
+        padding: $spacing-large;
         width: 50%;
       }
     }

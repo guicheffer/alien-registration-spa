@@ -73,6 +73,7 @@
     "lodash": "^4.17.4",
     "node-sass": "^4.5.3",
     "node-static": "^0.7.10",
+    "particles.js": "^2.0.0",
     "path": "^0.12.7",
     "postcss-loader": "^2.0.6",
     "raw-loader": "^0.5.1",

@@ -33,7 +33,7 @@ class List extends Component {
     } = this.props
 
     return (
-      <div className="panel__content panel__content--list">
+      <div className="panel__content panel__list">
         <Helmet>
           <title>
             { getTitle((params.specie ? params.specie : 'Aliens')) }
@@ -42,56 +42,60 @@ class List extends Component {
 
         <Sidebar/>
 
-        <AddNew/>
+        <div className="list__wrapper">
+          <AddNew/>
 
-        <table>
-          <thead>
-            <tr>
-              <th>
-                <a
-                  href="#"
-                  data-sort-by="name"
-                  onClick={this._handleSort.bind(this)}
-                > {aliens.length ? this._sortedBy('name') : ''} Name </a>
-              </th>
-              { species.map((specie, specieKey) => (
-                <th key={specieKey}>
-                  <a
-                    href="#"
-                    data-sort-by={specie.slug}
-                    onClick={this._handleSort.bind(this)}
-                  > {this._sortedBy(specie.slug)} {specie.name} </a>
-                </th>
-              ))}
-              <th> Delete? </th>
-            </tr>
-          </thead>
-
-          <tbody>
-            { aliens.length ?
-                aliens.map(alien => this._createRow(alien, alien.id, species))
-              : (
+          <div className="list__table">
+            <table className="list__itself">
+              <thead>
                 <tr>
-                  <td colSpan={species.length + 2}> Empty results </td>
+                  <th>
+                    <a
+                      href="#"
+                      data-sort-by="name"
+                      onClick={this._handleSort.bind(this)}
+                    > {aliens.length ? this._sortedBy('name') : ''} Name </a>
+                  </th>
+                  { species.map((specie, specieKey) => (
+                    <th key={specieKey}>
+                      <a
+                        href="#"
+                        data-sort-by={specie.slug}
+                        onClick={this._handleSort.bind(this)}
+                      > {this._sortedBy(specie.slug)} {specie.name} </a>
+                    </th>
+                  ))}
+                  <th> Delete? </th>
                 </tr>
-              )
-            }
-          </tbody>
-        </table>
+              </thead>
 
-        {
-          params.specie && interacted ?
-            <Link to='/aliens/' onClick={this.props.updateList}> interacted </Link>
-          : ''
-        }
+              <tbody>
+                { aliens.length ?
+                    aliens.map(alien => this._createRow(alien, alien.id, species))
+                  : (
+                    <tr>
+                      <td colSpan={species.length + 2}> Empty results </td>
+                    </tr>
+                  )
+                }
+              </tbody>
+            </table>
+          </div>
 
-        <ul className="list__links">
-          { filteredSpecies.map((specie, index) => (
-            <li key={index}>
-              <Link to={`/aliens/specie/${specie.slug}/`}> {specie.name} </Link>
-            </li>
-          )) }
-        </ul>
+          {
+            params.specie && interacted ?
+              <Link to='/aliens/' onClick={this.props.updateList}> interacted </Link>
+            : ''
+          }
+
+          <ul className="list__links">
+            { filteredSpecies.map((specie, index) => (
+              <li className="list__link" key={index}>
+                <Link to={`/aliens/specie/${specie.slug}/`}> {specie.name} </Link>
+              </li>
+            )) }
+          </ul>
+        </div>
       </div>
     )
   }

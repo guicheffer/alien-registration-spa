@@ -10,9 +10,10 @@ import ReactDOM from 'react-dom'
 import { Provider } from 'react-redux'
 import { Route, Switch } from 'react-router-dom'
 import { ConnectedRouter } from 'react-router-redux'
-import store, { history } from '../core/store'
+import particles from '../styleguide/particles'
 
 import AbstractEntry from '../core/entry'
+import store, { history } from '../core/store'
 
 import Homepage from './homepage'
 import List from './list'
@@ -22,8 +23,6 @@ const browser = window
 
 class MainEntry extends AbstractEntry {
   start ({ initilizationData }) {
-    this._giveInterviewer2NiceAndBeautifulGiantWelcomeMessages()
-
     this.initilizationData = initilizationData
 
     this.ui = {
@@ -31,6 +30,7 @@ class MainEntry extends AbstractEntry {
     }
 
     this.render()
+    this._customStart()
   }
 
   render () {
@@ -53,6 +53,11 @@ class MainEntry extends AbstractEntry {
       </Provider>,
       this.ui.app,
     )
+  }
+
+  _customStart () {
+    particles.init()
+    this._giveInterviewer2NiceAndBeautifulGiantWelcomeMessages()
   }
 
   _giveInterviewer2NiceAndBeautifulGiantWelcomeMessages () {

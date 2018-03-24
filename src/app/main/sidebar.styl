@@ -6,12 +6,44 @@
 
 @import 'container';
 @import 'spacing';
+@import 'palette';
 
 sidebar() {
   $width = 230px;
+
+  border-radius: $spacing-xxsmall;
+  border: 1px solid $white-base;
+  padding: $spacing-base;
   width: $width;
 
-  .sidebar {}
+  & a:hover { text-decoration: underline; }
+  .sidebar {
+    &__title { margin: 0 0 $spacing-small; }
+    &__total { font-weight: $font-weight-bold; }
+
+    &__species { clear: both; }
+
+    &__specie {
+      border-top: 1px dashed $black-base;
+      margin: $spacing-small 0;
+      padding-left: $spacing-large - $spacing-xxsmall;
+      padding-top: $spacing-small;
+      position: relative;
+
+      &:first-child {
+        border-top: 0;
+        margin-top: 0;
+        padding-top: $spacing-xxsmall;
+      }
+
+      &::before {
+        content: '👽';
+        font-size: $font-size-small;
+        left: 0;
+        position: absolute;
+      }
+    }
+  }
 }
 
 sidebar-responsive() {}

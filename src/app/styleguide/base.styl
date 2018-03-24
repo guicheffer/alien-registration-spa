@@ -35,7 +35,7 @@ font-face-bold()
 body {
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
-  background: $color-primary;
+  background: $black-base;
   background-position: 50% 50%;
   background-size: 100%;
   color: $white-base;
@@ -43,11 +43,21 @@ body {
 }
 
 body, input, a {
+  color: $white-base;
   font-family: 'Mukta', Helvetica, sans-serif;
   font-size: $font-size-base;
   font-style: normal;
   font-weight: $font-weight-normal;
   text-decoration: none;
+}
+
+.particles-js-canvas-el {
+  $Z-INDEX = -10;
+
+  left: 0;
+  position: absolute;
+  top: 0;
+  z-index: $Z-INDEX;
 }
 
 .alien-registration {
