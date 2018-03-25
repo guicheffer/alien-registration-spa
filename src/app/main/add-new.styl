@@ -38,11 +38,11 @@ add-new() {
     &__specie {
       label {
         cursor: pointer;
-        opacity: 0.4;
+        opacity: 0.2;
         transition: opacity .2s ease-in-out;
         will-change: opacity;
 
-        &:hover { opacity: 0.6; }
+        &:hover { opacity: 0.5; }
       }
 
       [type=checkbox] {
@@ -71,6 +71,8 @@ add-new() {
           background: $black-base;
           color: $white-base;
         }
+
+        &:active { background: darken($black-base, 50%); }
       }
 
       &[disabled] { background: $gray-disabled; }

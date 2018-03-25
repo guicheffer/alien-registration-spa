@@ -7,6 +7,8 @@
 
 list() {
   .list {
+    &__wrapper { position: relative; }
+
     &__table {
       $max-height = 400px;
       $min-height = 80px;
@@ -16,12 +18,12 @@ list() {
       border: 1px solid $white-base;
       margin: $spacing-large 0 0;
       min-height: $min-height;
-      padding: $spacing-xsmall;
+      padding: ($spacing-xlarge + $spacing-xxsmall) $spacing-xsmall $spacing-xsmall;
       position: relative;
       width: 100%;
 
       &.scrollable {
-        $height = $spacing-large;
+        $height = $spacing-base;
 
         &::after {
           content: '';
@@ -53,8 +55,6 @@ list() {
         &__itself {
           width: 100%;
 
-          tbody tr:first-child td { padding-top: $spacing-xlarge; }
-
           @keyframes show-just-inserted {
             0% {
               background: $white-base;
@@ -76,12 +76,13 @@ list() {
           td:not(:first-child) { text-align: center; }
 
           th {
+            border: none;
+            color: transparent;
             line-height: 0;
-            padding-top: 0;
             padding-bottom: 0;
             padding-top: 0;
-            color: transparent;
-            border: none;
+            padding-top: 0;
+            user-select: none;
             white-space: nowrap;
 
             &:first-child div { margin-left: ($spacing-xxlarge * -1) }
@@ -111,8 +112,8 @@ list() {
             }
 
             &.table__delete-it {
-              padding: $spacing-xxsmall $spacing-large;
               position: relative;
+              width: $spacing-xxxlarge;
 
               & > a,
               & > p { position: absolute; }
@@ -122,6 +123,8 @@ list() {
 
                 &:hover { transform: rotateZ(-90deg); }
               }
+
+              & > p { padding-left: $spacing-xxsmall; }
 
               &, a { font-size: $font-size-small; }
             }
@@ -156,10 +159,13 @@ list() {
     }
 
     &__links {
+      bottom: 0;
       display: flex;
       flex-direction: row;
       justify-content: flex-end;
-      margin: $spacing-large 0 0;
+      position: absolute;
+      right: 0;
+      user-select: none;
     }
 
     &__link {
@@ -169,24 +175,25 @@ list() {
         color: $blue-action;
 
         &:hover { text-decoration: underline; }
+
         &::before {
           content: '👽';
           float: left;
           font-size: $font-size-small;
           margin-right: $spacing-xxsmall;
+          width: $spacing-base;
         }
 
         &[disabled] {
           color: $gray-base;
-          font-size: $font-size-small;
           font-weight: $font-weight-bold;
           pointer-events: none;
 
-          &::before { content: ''; }
+          &::before { content: '👾'; }
         }
       }
 
-      &:first-child { margin-right: 0; }
+      &:last-child { margin-right: 0; }
     }
   }
 }

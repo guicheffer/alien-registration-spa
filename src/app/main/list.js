@@ -9,7 +9,6 @@ import AddNew from './add-new'
 import Sidebar from './sidebar'
 
 import { getTitle } from '../helpers/get-initialization-data'
-import getSpeciesByAlien from './utils/get-species-by-alien'
 
 import { remove, sortBy, updateSpecie } from './modules/aliens'
 import { requestDeletion, updateList } from './modules/defaults'
@@ -26,11 +25,7 @@ class List extends Component {
   render () {
     const { params } = this.props.match
     const { aliens } = this.state
-    const {
-      filteredSpecies,
-      interacted,
-      species,
-    } = this.props
+    const { interacted, species } = this.props
     const currentSpecieSlug = params.specie || ''
 
     return (
@@ -112,7 +107,7 @@ class List extends Component {
           }
 
           <ul className="list__links">
-            { filteredSpecies.map((specie, index) => (
+            { species.map((specie, index) => (
               <li className="list__link" key={index}>
                 <Link
                   to={`/aliens/specie/${specie.slug}/`}
@@ -232,7 +227,6 @@ class List extends Component {
 
 const mapStateToProps = state => ({
   aliens: state.aliens.list,
-  filteredSpecies: getSpeciesByAlien(state.defaults.species, state.aliens.list),
   interacted: state.defaults.interacted,
   isDeleting: state.defaults.isDeleting,
   sorted: state.aliens.sorted,
