@@ -22,10 +22,11 @@ panel() {
       border-radius: $spacing-base;
       box-shadow: $spacing-xxsmall $spacing-xxsmall $spacing-xxxlarge $spacing-base $gray-cvoiw;
       display: flex;
-      flex-direction: column-reverse;
+      flex-direction: column;
       flex-wrap: wrap;
       justify-content: flex-start;
       margin-top: $spacing-xxlarge;
+      padding: $spacing-large;
     }
 
     &__homepage {
@@ -48,7 +49,7 @@ panel() {
 }
 
 panel-responsive() {
-  +mq-medium-up() {
+  +mq-large-up() {
     align-items: center;
     justify-content: center;
 
@@ -60,7 +61,6 @@ panel-responsive() {
         flex-direction: row;
         justify-content: space-between;
         min-width: $min-width;
-        padding: $spacing-large;
         width: 50%;
       }
     }

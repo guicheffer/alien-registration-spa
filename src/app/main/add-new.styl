@@ -18,6 +18,7 @@ add-new() {
       align-items: center;
       display: flex;
       margin: $spacing-xsmall 0 0;
+      flex-direction: column;
     }
 
     &__input {
@@ -27,12 +28,15 @@ add-new() {
       color: $white-base;
       outline: none;
       padding: $spacing-xxsmall $spacing-xsmall;
+      width: 100%;
     }
 
     &__species {
       display: flex;
       flex: 1;
-      justify-content: space-around;
+      justify-content: space-between;
+      margin: $spacing-base 0;
+      width: 100%;
     }
 
     &__specie {
@@ -48,20 +52,25 @@ add-new() {
       [type=checkbox] {
         display: none;
 
-        &:checked + label { opacity: 1; }
+        &:checked + label {
+          font-weight: $font-weight-bold;
+          opacity: 1;
+        }
       }
     }
 
     &__go {
       background: $white-base;
-      border-radius: $spacing-small;
+      border-radius: $spacing-xxsmall;
       border: 0;
-      font-size: $font-size-small;
+      font-size: $font-size-base;
+      line-height: $font-size-large;
       margin: 0 $spacing-small 0;
       outline: 0;
       padding: $spacing-xxsmall $spacing-base;
       text-transform: uppercase;
       transition: background .2s linear, color .2s linear;
+      width: 100%;
       will-change: background, color;
 
       &:not([disabled]) {
@@ -83,7 +92,24 @@ add-new() {
 add-new-responsive() {
   +mq-medium-up() {
     .add-new {
+      &__field {
+        flex-direction: row;
+      }
 
+      &__input { width: auto; }
+
+      &__species {
+        justify-content: space-around;
+        margin: auto;
+        width: auto;
+      }
+
+      &__go {
+        border-radius: $spacing-small;
+        font-size: $font-size-small;
+        line-height: auto;
+        width: auto;
+      }
     }
   }
 }

@@ -6,6 +6,10 @@
 @import 'spacing';
 
 list() {
+  height: 100%;
+  margin: 0;
+  width: 100%;
+
   .list {
     &__wrapper { position: relative; }
 
@@ -85,7 +89,13 @@ list() {
             user-select: none;
             white-space: nowrap;
 
-            &:first-child div { margin-left: ($spacing-xxlarge * -1) }
+            &:first-child {
+              $width = 160px;
+
+              width: $width;
+
+              div { margin-left: ($spacing-xxlarge * -1) }
+            }
 
             div {
               background: transparent;
@@ -138,7 +148,7 @@ list() {
 
     &__warning {
       display: block;
-      margin: $spacing-small 0;
+      margin: $spacing-small 0 $spacing-xlarge;
       text-align: right;
       width: 100%;
 
@@ -163,7 +173,8 @@ list() {
       display: flex;
       flex-direction: row;
       justify-content: flex-end;
-      position: absolute;
+      margin: $spacing-large 0 0;
+      position: relative;
       right: 0;
       user-select: none;
     }
@@ -199,12 +210,18 @@ list() {
 }
 
 list-responsive() {
-  +mq-medium-up() {
+  +mq-large-up() {
+    height: auto;
+    margin: auto;
+    width: auto;
+
     .list {
       &__wrapper {
         flex: 1;
         margin-left: $spacing-large;
       }
+
+      &__table {}
     }
   }
 }

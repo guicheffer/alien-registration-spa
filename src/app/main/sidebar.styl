@@ -9,32 +9,29 @@
 @import 'palette';
 
 sidebar() {
-  $width = 230px;
+  $width = 100%;
 
-  border-radius: $spacing-xxsmall;
-  border: 1px solid $white-base;
-  padding: $spacing-base;
+  margin: 0 0 $spacing-large;
   width: $width;
 
   & a:hover { text-decoration: underline; }
+
   .sidebar {
     &__title { margin: 0 0 $spacing-small; }
     &__total { font-weight: $font-weight-bold; }
 
-    &__species { clear: both; }
+    &__species {
+      display: flex;
+      flex-wrap: wrap;
+      clear: both;
+    }
 
     &__specie {
-      border-top: 1px dashed $black-base;
-      margin: $spacing-small 0;
+      margin: 0;
       padding-left: $spacing-large - $spacing-xxsmall;
       padding-top: $spacing-small;
       position: relative;
-
-      &:first-child {
-        border-top: 0;
-        margin-top: 0;
-        padding-top: $spacing-xxsmall;
-      }
+      width: 50%;
 
       a {
         &::before {
@@ -50,4 +47,30 @@ sidebar() {
   }
 }
 
-sidebar-responsive() {}
+sidebar-responsive() {
+  +mq-large-up() {
+    $width = 200px;
+
+    border-radius: $spacing-xsmall;
+    border: 1px solid $white-base;
+    margin: initial;
+    padding: $spacing-base;
+    width: $width;
+
+    .sidebar {
+      &__species { display: block; }
+
+      &__specie {
+        border-top: 1px dashed $black-base;
+        margin: $spacing-small 0;
+        width: auto;
+
+        &:first-child {
+          border-top: 0;
+          margin-top: 0;
+          padding-top: $spacing-xxsmall;
+        }
+      }
+    }
+  }
+}
