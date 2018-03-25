@@ -40,6 +40,7 @@ add-new() {
     &__specie {
       label {
         cursor: pointer;
+        font-size: $font-size-small;
         opacity: 0.2;
         transition: opacity .2s ease-in-out;
         will-change: opacity;
@@ -101,6 +102,8 @@ add-new-responsive() {
         margin: auto;
         width: auto;
       }
+
+      &__specie label { font-size: initial; }
 
       &__go {
         border-radius: $spacing-small;

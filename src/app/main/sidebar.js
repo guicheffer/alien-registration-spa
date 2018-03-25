@@ -13,7 +13,7 @@ class Sidebar extends Component {
       <aside className="alien-registration__sidebar">
         <h2 className="sidebar__title">
           <Link className="sidebar__total" to='/aliens/'>
-            {!currentSpecieSlug ? '✨' : ''} Total Aliens: {this.props.totalAliens}
+            {!currentSpecieSlug ? '✨' : '👉🏼'} Total Aliens: {this.props.totalAliens}
           </Link>
         </h2>
 

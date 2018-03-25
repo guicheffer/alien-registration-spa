@@ -12,7 +12,6 @@
 
 panel() {
   display: flex;
-  height: 'calc(90vh - %s)' % $spacing-xxlarge;
   justify-content: space-around;
   width: 100%;
 
@@ -24,10 +23,9 @@ panel() {
       display: flex;
       flex-direction: column;
       flex-wrap: wrap;
-      height: 100%;
       justify-content: flex-start;
-      margin-top: $spacing-xxlarge;
-      padding: $spacing-large;
+      min-height: 95vh;
+      padding: $spacing-small;
       width: 100%;
     }
 
@@ -45,7 +43,6 @@ panel() {
 
 panel-responsive() {
   +mq-large-up() {
-    align-items: center;
     justify-content: center;
 
     .panel {
@@ -54,10 +51,12 @@ panel-responsive() {
 
         box-sizing: content-box;
         flex-direction: row;
-        height: auto;
         justify-content: space-between;
+        margin-top: $spacing-xxlarge;
         margin: auto;
+        min-height: auto;
         min-width: $min-width;
+        padding: $spacing-large;
         width: 50%;
       }
 

@@ -19,16 +19,16 @@ const initialState = {
       slug: 'greys',
     },
     {
+      name: 'Unkown',
+      slug: 'unknown',
+    },
+    {
       name: 'Nordic',
       slug: 'nordics',
     },
     {
       name: 'Reptilian',
       slug: 'reptilians',
-    },
-    {
-      name: 'Unkown',
-      slug: 'unknown',
     },
   ],
 }

@@ -13,9 +13,11 @@ footer() {
   bottom: 0;
   color: $white-base;
   cursor: default;
-  position: fixed;
+  position: relative;
   text-align: right;
   width: 100%;
+
+  &, a { font-size: $font-size-small; }
 
   .footer {
     &__github-repo {
@@ -29,4 +31,8 @@ footer() {
   a { color: $blue-action; }
 }
 
-footer-responsive() {}
+footer-responsive() {
+  +mq-medium-up() {
+    &, a { font-size: $font-size-base; }
+  }
+}
