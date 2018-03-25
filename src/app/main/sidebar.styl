@@ -36,11 +36,15 @@ sidebar() {
         padding-top: $spacing-xxsmall;
       }
 
-      a::before {
-        content: '⭐️';
-        font-size: $font-size-small;
-        left: 0;
-        position: absolute;
+      a {
+        &::before {
+          content: '⭐️';
+          font-size: $font-size-small;
+          left: 0;
+          position: absolute;
+        }
+
+        &[data-current=true]::before { content: '👾'; }
       }
     }
   }

@@ -69,7 +69,7 @@ list() {
           tr {
             opacity: 1;
 
-            &.just-inserted { animation: show-just-inserted 1s ease-out; }
+            &[data-just-inserted=true] { animation: show-just-inserted 1s ease-out; }
           }
 
           th:not(:first-child),
@@ -173,6 +173,14 @@ list() {
           float: left;
           font-size: $font-size-small;
           margin-right: $spacing-xxsmall;
+        }
+
+        &[disabled] {
+          color: $gray-base;
+          font-size: $font-size-small;
+          pointer-events: none;
+
+          &::before { content: ''; }
         }
       }
 

@@ -31,16 +31,17 @@ class List extends Component {
       interacted,
       species,
     } = this.props
+    const currentSpecieSlug = params.specie || ''
 
     return (
       <div className="panel__content panel__list">
         <Helmet>
           <title>
-            { getTitle((params.specie ? params.specie : 'Aliens')) }
+            { getTitle((currentSpecieSlug || 'Aliens')) }
           </title>
         </Helmet>
 
-        <Sidebar/>
+        <Sidebar params={params}/>
 
         <div className="list__wrapper">
           <AddNew/>
@@ -113,7 +114,10 @@ class List extends Component {
           <ul className="list__links">
             { filteredSpecies.map((specie, index) => (
               <li className="list__link" key={index}>
-                <Link to={`/aliens/specie/${specie.slug}/`}> {specie.name} </Link>
+                <Link
+                  to={`/aliens/specie/${specie.slug}/`}
+                  disabled={specie.slug === currentSpecieSlug}
+                > {specie.name} </Link>
               </li>
             )) }
           </ul>
@@ -126,7 +130,7 @@ class List extends Component {
     const { isDeleting } = this.props
 
     return (
-      <tr key={id} className={alien.justInserted ? 'just-inserted' : ''}>
+      <tr key={id} data-just-inserted={alien.justInserted}>
         <td> {alien.name} </td>
 
         { species.map((specie, specieKey) => (
