@@ -30,10 +30,20 @@ export default (state = initialState, action) => {
       const { name, species } = action.data.alien
       const { list: rawList, sorted } = state
 
+      rawList.forEach((alien) => {
+        if (!alien.justInserted) return null
+
+        // eslint-disable-next-line no-param-reassign
+        delete alien.justInserted
+
+        return false
+      })
+
       const listSortedByName = _.sortBy([
         ...rawList,
         {
           id: generateUniqId(),
+          justInserted: true,
           name,
           species,
         },

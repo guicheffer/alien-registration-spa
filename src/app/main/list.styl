@@ -9,44 +9,174 @@ list() {
   .list {
     &__table {
       $max-height = 400px;
+      $min-height = 80px;
+      $shadow-size = $spacing-small;
 
       border-radius: $spacing-xxsmall;
       border: 1px solid $white-base;
       margin: $spacing-large 0 0;
-      max-height: $max-height;
-      overflow-y: scroll;
+      min-height: $min-height;
       padding: $spacing-xsmall;
+      position: relative;
       width: 100%;
+
+      &.scrollable {
+        $height = $spacing-large;
+
+        &::after {
+          content: '';
+          height: $height;
+          left: 0;
+          position: absolute;
+          width: 100%;
+          z-index: 10;
+        }
+
+        &--bottom::after {
+          background: linear-gradient(hsla(0,0%,100%,.001), $gray-opaque $shadow-size);
+          bottom: 0;
+        }
+
+        &--top::after {
+          background: linear-gradient(to top, hsla(0,0%,100%,.001), $gray-opaque $shadow-size);
+          height: $spacing-xxlarge;
+          top: 0;
+        }
+      }
+
+      .table {
+        &__scrollable {
+          max-height: $max-height;
+          overflow-y: scroll;
+        }
+
+        &__itself {
+          width: 100%;
+
+          tbody tr:first-child td { padding-top: $spacing-xlarge; }
+
+          @keyframes show-just-inserted {
+            0% {
+              background: $white-base;
+              opacity: 0;
+            }
+            100% {
+              background: none;
+              opacity: 1;
+            }
+          }
+
+          tr {
+            opacity: 1;
+
+            &.just-inserted { animation: show-just-inserted 1s ease-out; }
+          }
+
+          th:not(:first-child),
+          td:not(:first-child) { text-align: center; }
+
+          th {
+            line-height: 0;
+            padding-top: 0;
+            padding-bottom: 0;
+            padding-top: 0;
+            color: transparent;
+            border: none;
+            white-space: nowrap;
+
+            &:first-child div { margin-left: ($spacing-xxlarge * -1) }
+
+            div {
+              background: transparent;
+              color: $white-base;
+              line-height: normal;
+              margin-left: ($spacing-xlarge * -1);
+              padding: $spacing-small $spacing-xxlarge;
+              position: absolute;
+              top: 0;
+              z-index: 20;
+
+              span { font-size: $font-size-small; }
+            }
+          }
+
+          td {
+            &:first-child { cursor: default; }
+
+            &:not(:first-child) { padding: $spacing-xxsmall $spacing-base; }
+
+            &[colspan] {
+              color: $red-base;
+              padding: $spacing-small;
+            }
+
+            &.table__delete-it {
+              padding: $spacing-xxsmall $spacing-large;
+              position: relative;
+
+              & > a,
+              & > p { position: absolute; }
+
+              & > a {
+                transition: transform .2s ease-in-out;
+
+                &:hover { transform: rotateZ(-90deg); }
+              }
+
+              &, a { font-size: $font-size-small; }
+            }
+          }
+
+          a { font-weight: $font-weight-bold; }
+        }
+      }
     }
 
-    &__itself {
+
+    &__warning {
+      display: block;
+      margin: $spacing-small 0;
+      text-align: right;
       width: 100%;
 
-      th:not(:first-child),
-      td:not(:first-child) { text-align: center; }
+      a {
+        color: $yellow-base;
+        font-size: $font-size-small;
+        padding-left: $spacing-large - $spacing-xxsmall;
+        position: relative;
 
-      th {
-        text-align: left;
-        border-bottom: 1px solid $white-base;
+        &:hover { text-decoration: underline; }
+        &::before {
+          content: '⚠️';
+          left: 0;
+          margin-right: $spacing-xxsmall;
+          position: absolute;
+        }
       }
-
-      td {
-        &:not(:first-child) { padding: $spacing-xxsmall $spacing-base; }
-      }
-
-      a { font-weight: $font-weight-bold; }
     }
 
     &__links {
       display: flex;
+      flex-direction: row-reverse;
       margin: $spacing-large 0 0;
     }
 
     &__link {
-      margin: 0 0 $spacing-small;
+      margin: 0 $spacing-small 0 0;
 
-      a { color: $blue-action; }
-      &:first-child { margin-left: 0; }
+      a {
+        color: $blue-action;
+
+        &:hover { text-decoration: underline; }
+        &::before {
+          content: '👽';
+          float: left;
+          font-size: $font-size-small;
+          margin-right: $spacing-xxsmall;
+        }
+      }
+
+      &:first-child { margin-right: 0; }
     }
   }
 }

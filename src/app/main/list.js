@@ -45,46 +45,68 @@ class List extends Component {
         <div className="list__wrapper">
           <AddNew/>
 
-          <div className="list__table">
-            <table className="list__itself">
-              <thead>
-                <tr>
-                  <th>
-                    <a
-                      href="#"
-                      data-sort-by="name"
-                      onClick={this._handleSort.bind(this)}
-                    > {aliens.length ? this._sortedBy('name') : ''} Name </a>
-                  </th>
-                  { species.map((specie, specieKey) => (
-                    <th key={specieKey}>
-                      <a
-                        href="#"
-                        data-sort-by={specie.slug}
-                        onClick={this._handleSort.bind(this)}
-                      > {this._sortedBy(specie.slug)} {specie.name} </a>
-                    </th>
-                  ))}
-                  <th> Delete? </th>
-                </tr>
-              </thead>
+          <div
+            className={`list__table js-scrollable ${aliens.length >= 1 ? 'scrollable scrollable--bottom' : ''}`}
+          >
+            <div className="table__scrollable js-scrollable-table">
+              <table className="table__itself">
+                <thead>
+                  <tr>
+                    <th>
+                      {aliens.length ? this._sortedBy('name') : ''} Name
 
-              <tbody>
-                { aliens.length ?
-                    aliens.map(alien => this._createRow(alien, alien.id, species))
-                  : (
-                    <tr>
-                      <td colSpan={species.length + 2}> Empty results </td>
-                    </tr>
-                  )
-                }
-              </tbody>
-            </table>
+                      <div>
+                        <a
+                          href="#"
+                          data-sort-by="name"
+                          onClick={this._handleSort.bind(this)}
+                        > <span> {aliens.length ? this._sortedBy('name') : ''} </span> Name </a>
+                      </div>
+                    </th>
+                    { species.map((specie, specieKey) => (
+                      <th key={specieKey}>
+                        {this._sortedBy(specie.slug)} {specie.name}
+
+                        <div>
+                          <a
+                          href="#"
+                          data-sort-by={specie.slug}
+                          onClick={this._handleSort.bind(this)}
+                          > <span> {this._sortedBy(specie.slug)} </span> {specie.name} </a>
+                        </div>
+                      </th>
+                    ))}
+
+                    <th>
+                      Delete?
+
+                      <div> Delete? </div>
+                    </th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  { aliens.length ?
+                      aliens.map(alien => this._createRow(alien, alien.id, species))
+                    : (
+                      <tr>
+                        <td colSpan={species.length + 2}> Empty results </td>
+                      </tr>
+                    )
+                  }
+                </tbody>
+              </table>
+            </div>
           </div>
 
           {
             params.specie && interacted ?
-              <Link to='/aliens/' onClick={this.props.updateList}> interacted </Link>
+              <small className="list__warning">
+                <Link to='/aliens/' onClick={this.props.updateList}>
+                  You are probally viewing results under the filters that are updated.
+                  Please click here to show up full results.
+                </Link>
+              </small>
             : ''
           }
 
@@ -104,7 +126,7 @@ class List extends Component {
     const { isDeleting } = this.props
 
     return (
-      <tr key={id}>
+      <tr key={id} className={alien.justInserted ? 'just-inserted' : ''}>
         <td> {alien.name} </td>
 
         { species.map((specie, specieKey) => (
@@ -122,7 +144,7 @@ class List extends Component {
           </td>
         )) }
 
-        <td>
+        <td className="table__delete-it">
           { isDeleting === id ?
               <p>
                 <a data-next-step="proceed" href="#" title="Delete it!"> 👍🏼 </a> |
@@ -172,6 +194,21 @@ class List extends Component {
 
     browser.document.body.addEventListener('click', onPageClick)
     event.preventDefault()
+  }
+
+  componentDidMount () {
+    const scrollable = browser.document.querySelector('.js-scrollable')
+    const scrollableTable = browser.document.querySelector('.js-scrollable-table')
+
+    scrollableTable.addEventListener('scroll', () => {
+      if (scrollableTable.scrollTop === 0) {
+        scrollable.classList.remove('scrollable--top')
+        scrollable.classList.add('scrollable--bottom')
+      } else {
+        scrollable.classList.remove('scrollable--bottom')
+        scrollable.classList.add('scrollable--top')
+      }
+    })
   }
 
   componentWillMount () {

@@ -9,6 +9,7 @@ import { add } from './modules/aliens'
 const browser = window
 
 const DEFAULT_MAX_LENGTH = 30
+const DEFAULT_TABLE_PADDING = 48
 
 class AddNew extends Component {
   constructor (props) {
@@ -67,6 +68,11 @@ class AddNew extends Component {
   _afterAdding () {
     this.props.changePage()
     this.input.value = ''
+
+    const scrollableTable = browser.document.querySelector('.js-scrollable-table')
+    const justInserted = browser.document.querySelector('.just-inserted')
+
+    scrollableTable.scrollTo(0, justInserted.offsetTop - DEFAULT_TABLE_PADDING)
   }
 
   handleSubmit (e) {
