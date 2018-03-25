@@ -6,8 +6,8 @@ import getSpeciesByAlien from './utils/get-species-by-alien'
 
 class Sidebar extends Component {
   render () {
-    const { params } = this.props || {}
-    const currentSpecieSlug = params.specie || ''
+    const { params = {} } = this.props
+    const currentSpecieSlug = params.specie ? params.specie : ''
 
     return (
       <aside className="alien-registration__sidebar">

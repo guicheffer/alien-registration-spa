@@ -72,7 +72,9 @@ class AddNew extends Component {
     const scrollableTable = browser.document.querySelector('.js-scrollable-table')
     const justInserted = browser.document.querySelector('[data-just-inserted=true]')
 
-    scrollableTable.scrollTo(0, justInserted.offsetTop - DEFAULT_TABLE_PADDING)
+    if (justInserted) {
+      scrollableTable.scrollTo(0, justInserted.offsetTop - DEFAULT_TABLE_PADDING)
+    }
   }
 
   handleSubmit (e) {

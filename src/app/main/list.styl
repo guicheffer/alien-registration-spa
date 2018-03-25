@@ -157,7 +157,8 @@ list() {
 
     &__links {
       display: flex;
-      flex-direction: row-reverse;
+      flex-direction: row;
+      justify-content: flex-end;
       margin: $spacing-large 0 0;
     }
 
@@ -178,6 +179,7 @@ list() {
         &[disabled] {
           color: $gray-base;
           font-size: $font-size-small;
+          font-weight: $font-weight-bold;
           pointer-events: none;
 
           &::before { content: ''; }
