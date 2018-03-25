@@ -6,13 +6,11 @@
 @import 'spacing';
 
 add-new() {
-  .add-new {
-    &__label {
-      display: block;
-      font-weight: $font-weight-bold;
+  border-top: 1px dashed $white-base;
+  padding-top: $spacing-large;
 
-      &::before { content: '👇🏼'; }
-    }
+  .add-new {
+    &__label { display: none; }
 
     &__field {
       align-items: center;
@@ -109,6 +107,20 @@ add-new-responsive() {
         font-size: $font-size-small;
         line-height: auto;
         width: auto;
+      }
+    }
+  }
+
+  +mq-large-up() {
+    border: 0;
+    padding: 0;
+
+    .add-new {
+      &__label {
+        display: block;
+        font-weight: $font-weight-bold;
+
+        &::before { content: '👇🏼'; }
       }
     }
   }

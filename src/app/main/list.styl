@@ -6,10 +6,6 @@
 @import 'spacing';
 
 list() {
-  height: 100%;
-  margin: 0;
-  width: 100%;
-
   .list {
     &__wrapper { position: relative; }
 
@@ -22,7 +18,7 @@ list() {
       border: 1px solid $white-base;
       margin: $spacing-large 0 0;
       min-height: $min-height;
-      padding: ($spacing-xlarge + $spacing-xxsmall) $spacing-xsmall $spacing-xsmall;
+      padding: ($spacing-xlarge + $spacing-xxsmall + ($spacing-xxsmall / 2)) $spacing-xsmall $spacing-xsmall;
       position: relative;
       width: 100%;
 
@@ -90,9 +86,9 @@ list() {
             white-space: nowrap;
 
             &:first-child {
-              $width = 160px;
+              $min-width = 160px;
 
-              width: $width;
+              min-width: $min-width;
 
               div { margin-left: ($spacing-xxlarge * -1) }
             }
@@ -123,7 +119,7 @@ list() {
 
             &.table__delete-it {
               position: relative;
-              width: $spacing-xxxlarge;
+              width: ($spacing-xxxlarge + $spacing-small);
 
               & > a,
               & > p { position: absolute; }
@@ -139,6 +135,9 @@ list() {
               &, a { font-size: $font-size-small; }
             }
           }
+
+          th:not(:first-child):not(:last-child),
+          td:not(:first-child):not(:last-child) { display: none; }
 
           a { font-weight: $font-weight-bold; }
         }
@@ -185,22 +184,10 @@ list() {
       a {
         color: $blue-action;
 
-        &:hover { text-decoration: underline; }
-
-        &::before {
-          content: '👽';
-          float: left;
-          font-size: $font-size-small;
-          margin-right: $spacing-xxsmall;
-          width: $spacing-base;
-        }
-
         &[disabled] {
           color: $gray-base;
           font-weight: $font-weight-bold;
           pointer-events: none;
-
-          &::before { content: '👾'; }
         }
       }
 
@@ -210,18 +197,49 @@ list() {
 }
 
 list-responsive() {
-  +mq-large-up() {
-    height: auto;
-    margin: auto;
-    width: auto;
+  +mq-medium-up() {
+    .list {
+      &__table {
+        .table {
+          &__itself {
+            th:not(:first-child):not(:last-child),
+            td:not(:first-child):not(:last-child) { display: table-cell; }
+          }
+        }
+      }
+    }
+  }
 
+  +mq-large-up() {
     .list {
       &__wrapper {
         flex: 1;
         margin-left: $spacing-large;
       }
 
-      &__table {}
+      &__table {
+        .table {
+          &__itself {
+            td.table__delete-it { width: $spacing-xxxlarge; }
+          }
+        }
+      }
+
+      &__link {
+        a {
+          &:hover { text-decoration: underline; }
+
+          &::before {
+            content: '👽';
+            float: left;
+            font-size: $font-size-small;
+            margin-right: $spacing-xxsmall;
+            width: $spacing-base;
+          }
+
+          &[disabled]::before { content: '👾'; }
+        }
+      }
     }
   }
 }

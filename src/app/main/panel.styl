@@ -24,16 +24,11 @@ panel() {
       display: flex;
       flex-direction: column;
       flex-wrap: wrap;
+      height: 100%;
       justify-content: flex-start;
       margin-top: $spacing-xxlarge;
       padding: $spacing-large;
-    }
-
-    &__homepage {
-      .panel__add-new {
-        flex: 1;
-        margin-left: $spacing-large;
-      }
+      width: 100%;
     }
 
     &__add-new {
@@ -59,9 +54,18 @@ panel-responsive() {
 
         box-sizing: content-box;
         flex-direction: row;
+        height: auto;
         justify-content: space-between;
+        margin: auto;
         min-width: $min-width;
         width: 50%;
+      }
+
+      &__homepage {
+        .panel__add-new {
+          flex: 1;
+          margin-left: $spacing-large;
+        }
       }
     }
   }
