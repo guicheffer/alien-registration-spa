@@ -12,7 +12,6 @@ list() {
     &__table {
       $max-height = 400px;
       $min-height = 80px;
-      $shadow-size = $spacing-small;
 
       border-radius: $spacing-xxsmall;
       border: 1px solid $white-base;
@@ -66,15 +65,14 @@ list() {
 
               min-width: $min-width;
 
-              div { margin-left: ($spacing-xxlarge * -1) }
+              div { margin-left: ($spacing-base * -1) }
             }
 
             div {
               background: transparent;
               color: $white-base;
               line-height: normal;
-              margin-left: ($spacing-xlarge * -1);
-              padding: $spacing-small $spacing-xxlarge;
+              padding: $spacing-xsmall $spacing-base;
               position: absolute;
               top: 0;
               z-index: 20;
@@ -204,6 +202,8 @@ list-responsive() {
       }
 
       &__table {
+        $shadow-size = $spacing-small;
+
         &.scrollable {
           $height = $spacing-base;
 
